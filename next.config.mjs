@@ -8,12 +8,37 @@ const nextConfig = {
   ] }]; },
 }; export default nextConfig;
 
+
 const nextConfig = {
-  async headers() { return [{ source: "/:path*", headers: [
-    { key: "X-Content-Type-Options", value: "nosniff" },
-    { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-    { key: "X-Frame-Options", value: "DENY" },
-    { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-    { key: "Content-Security-Policy", value: `default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}; connect-src 'self'` },
-  ] }]; },
-}; export default nextConfig;
+  // Generar archivos estáticos para Cloudflare Pages
+  output: "export",
+
+  // Permitir imágenes en la exportación estática
+  images: {
+    unoptimized: true,
+  },
+
+  // Cabeceras de seguridad
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "DENY" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: `default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}; connect-src 'self'`,
+          },
+        ],
+      },
+    ];
+  },
+};
+
+export default nextConfig;
