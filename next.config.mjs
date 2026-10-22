@@ -1,4 +1,3 @@
-
 const nextConfig = {
   // Generar archivos estáticos para Cloudflare Pages
   output: "export",
