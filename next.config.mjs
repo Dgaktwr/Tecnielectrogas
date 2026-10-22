@@ -1,6 +1,4 @@
 const nextConfig = {
-  // Generar archivos estáticos para Cloudflare Pages
-  output: "export",
 
   // Permitir imágenes en la exportación estática
   images: {
